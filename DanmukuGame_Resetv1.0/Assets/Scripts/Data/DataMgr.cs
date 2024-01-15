@@ -11,4 +11,8 @@ public class DataMgr : BaseManager<DataMgr>
     {
         _musicData = JsonMgr.Instance.LoadData<MusicData>("MusicData");
     } 
+    public void SaveSettingData()
+    {
+        JsonMgr.Instance.SaveData(_musicData, ("MusicData"));
+    }
 }
