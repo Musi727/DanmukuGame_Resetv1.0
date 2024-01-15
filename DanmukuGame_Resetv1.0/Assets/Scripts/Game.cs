@@ -9,6 +9,8 @@ public class Game : MonoBehaviour
     {
         //调用UIMgr生成开始界面
         UIMgr.Instance.ShowPanel<BeginPanel>("BeginPanel",E_UI_Layer.mid,(panel)=>{});
+        //初始化游戏数据
+        DataMgr.Instance.Init();
 
     }
 
