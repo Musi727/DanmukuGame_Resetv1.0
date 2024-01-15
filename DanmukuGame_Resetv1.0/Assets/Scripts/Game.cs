@@ -8,8 +8,8 @@ public class Game : MonoBehaviour
     void Start()
     {
         //调用UIMgr生成开始界面
-        // UIMgr.Instance.ShowPanel<BeginPanel>("BeginPanel",E_UI_Layer.mid,(panel)=>{});
-        
+        UIMgr.Instance.ShowPanel<BeginPanel>("BeginPanel",E_UI_Layer.mid,(panel)=>{});
+
     }
 
     // Update is called once per frame
