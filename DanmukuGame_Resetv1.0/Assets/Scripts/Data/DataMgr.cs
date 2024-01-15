@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DataMgr : BaseManager<DataMgr>
 {
+    public int SelectRoleID;
     private MusicData _musicData = new MusicData();
     public MusicData MusicData => _musicData;
     private List<PlaneInfo> _planeInfoList = new List<PlaneInfo>();

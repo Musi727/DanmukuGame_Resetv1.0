@@ -28,5 +28,7 @@ public class PlaneObj : MonoBehaviour
             //иообрф╤╞
             this.transform.Translate(Vector3.up * Mathf.Cos(Time.time) * Time.deltaTime * 0.1f);
         }
+        this.transform.Translate(Input.GetAxisRaw("Horizontal") * Vector3.right * Time.deltaTime * 20);
+        this.transform.Translate(Input.GetAxisRaw("Vertical") * Vector3.forward * Time.deltaTime * 20);
     }
 }

@@ -37,9 +37,12 @@ public class SelectPanel : BasePanel
                 InitPlaneInfo(_infoList[_index]);
                 break;
             case "btnStart":
+                //记录飞机索引
+                DataMgr.Instance.SelectRoleID = _index;
                 UIMgr.Instance.HidePanel<SelectPanel>("SelectPanel");
                 SceneMgr.Instance.LoadScene("GameScene", () =>
                 {
+                    PoolMgr.Instance.Clear();
                     UIMgr.Instance.ShowPanel<GamePanel>("GamePanel", E_UI_Layer.mid, (panel) =>
                     {
 
@@ -52,7 +55,7 @@ public class SelectPanel : BasePanel
     {
         base.ShowMe();
         //获得玩家预制体生成的位置
-        _planePos = this.transform.Find("planePos");
+        _planePos = GameObject.Find("planePos").transform;
         //打开该界面时，初始化飞机模型信息
         InitPlaneInfo(DataMgr.Instance.PlaneInfoList[_index]);
     }
@@ -63,7 +66,7 @@ public class SelectPanel : BasePanel
         if (Input.GetMouseButton(0))
         {
             //如果射线检测不为空
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out _hitInfo, 1000, 1 << LayerMask.NameToLayer("Default")))
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out _hitInfo, 1000, 1 << LayerMask.NameToLayer("UI")))
             {
                 //进行旋转
                 _hitInfo.transform.Rotate(Vector3.up, -Input.GetAxisRaw("Mouse X") * Time.deltaTime * 1000);
