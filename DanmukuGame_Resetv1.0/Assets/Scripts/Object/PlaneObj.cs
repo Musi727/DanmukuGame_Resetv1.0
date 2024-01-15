@@ -5,6 +5,7 @@ using static UnityEditor.PlayerSettings;
 
 public class PlaneObj : MonoBehaviour
 {
+    public static PlaneObj Player;
     private bool _isSelectPanel;
     public bool IsSelectPanel
     {
@@ -31,6 +32,7 @@ public class PlaneObj : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Player = this;
         _rotation = this.transform.rotation;
         _roleInfo = DataMgr.Instance.PlaneInfoList[DataMgr.Instance.SelectRoleID];
         _camera = GameObject.Find("Camera").GetComponent<Camera>();
@@ -41,8 +43,6 @@ public class PlaneObj : MonoBehaviour
         //使用Camera的方法将视口坐标（Viewport Coordinates）转换为世界坐标（World Coordinates
         _leftDown = Camera.main.ViewportToWorldPoint(p1);
         _rightUp = Camera.main.ViewportToWorldPoint(p2);
-        Debug.Log(_leftDown);
-        Debug.Log(_rightUp);
     }
 
     // Update is called once per frame

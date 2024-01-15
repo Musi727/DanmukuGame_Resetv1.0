@@ -1,19 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public class Game : MonoBehaviour
 {
+    private Transform _rolePos;
+    private List<Vector3> _TowerPos = new List<Vector3>();
+    private Camera _camera;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        //è°ƒç”¨UIMgrç”Ÿæˆå¼€å§‹ç•Œé¢
-        UIMgr.Instance.ShowPanel<BeginPanel>("BeginPanel",E_UI_Layer.mid,(panel)=>{});
-        //åˆå§‹åŒ–æ¸¸æˆæ•°æ®
-        DataMgr.Instance.Init();
-        //æ’­æ”¾éŸ³ä¹
-        MusicMgr.Instance.PlayBkMusic("John Williams - The Imperial March");
-        MusicMgr.Instance.BkMusic.volume = DataMgr.Instance.MusicData.musicValue;
-        MusicMgr.Instance.BkMusic.mute = !DataMgr.Instance.MusicData.isOpenMusic;
+        _camera = GameObject.Find("Camera").GetComponent<Camera>();
+        _rolePos = GameObject.Find("RolePos").transform;
+        //¸ù¾İË÷Òı¼ÓÔØ½ÇÉ«
+        PoolMgr.Instance.GetGameObject("Airplane/" + DataMgr.Instance.PlaneInfoList[DataMgr.Instance.SelectRoleID].modelRes, (plane) =>
+        {
+            plane.transform.SetParent(_rolePos, false);
+            if (plane.GetComponent<PlaneObj>() == null)
+                plane.AddComponent<PlaneObj>();
+        });
+        //»ñµÃÆÁÄ»×ø±ê×ªÊÀ½ç×ø±êµÄ4¸ö±ß½ç
+        //ÊÓ¿Ú×ø±ê×óÏÂÎª0,0 £¬ÓÒÉÏÎª1,1
+        Vector3 p0 = new Vector3(0, 0, 300);
+        Vector3 p1 = new Vector3(1, 1, 300);
+        Vector3 p2 = new Vector3(0, 1, 300);
+        Vector3 p3 = new Vector3(1, 0, 300);
+        //Ê¹ÓÃCameraµÄ·½·¨½«ÊÓ¿Ú×ø±ê£¨Viewport Coordinates£©×ª»»ÎªÊÀ½ç×ø±ê£¨World Coordinates
+        _TowerPos.Add(_camera.ViewportToWorldPoint(p0));
+        _TowerPos.Add(_camera.ViewportToWorldPoint(p1));
+        _TowerPos.Add(_camera.ViewportToWorldPoint(p2));
+        _TowerPos.Add(_camera.ViewportToWorldPoint(p3));
+        for(int i = 0; i < _TowerPos.Count; i++)
+        {
+            int index = i;
+            PoolMgr.Instance.GetGameObject("Tower", (tower) =>
+            {
+                if (tower.GetComponent<Tower>() == null)
+                    tower.AddComponent<Tower>().InitTowerInfo(DataMgr.Instance.TowerInfoList[index], _TowerPos[index]);
+            });
+        }
     }
 
     // Update is called once per frame
