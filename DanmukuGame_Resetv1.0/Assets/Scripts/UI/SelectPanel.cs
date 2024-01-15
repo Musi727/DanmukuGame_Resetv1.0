@@ -36,6 +36,16 @@ public class SelectPanel : BasePanel
                     _index = 0;
                 InitPlaneInfo(_infoList[_index]);
                 break;
+            case "btnStart":
+                UIMgr.Instance.HidePanel<SelectPanel>("SelectPanel");
+                SceneMgr.Instance.LoadScene("GameScene", () =>
+                {
+                    UIMgr.Instance.ShowPanel<GamePanel>("GamePanel", E_UI_Layer.mid, (panel) =>
+                    {
+
+                    });
+                });
+                break;
         }
     }
     public override void ShowMe()
@@ -49,15 +59,21 @@ public class SelectPanel : BasePanel
     protected override void Update()
     {
         base.Update();
-        //通过射线检测判断是否点击到了飞机
+        //通过射线检测判断是否点击到了角色模型
         if (Input.GetMouseButton(0))
         {
+            //如果射线检测不为空
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out _hitInfo, 1000, 1 << LayerMask.NameToLayer("Default")))
             {
+                //进行旋转
                 _hitInfo.transform.Rotate(Vector3.up, -Input.GetAxisRaw("Mouse X") * Time.deltaTime * 1000);
             }
         }
     }
+    /// <summary>
+    /// 初始化角色信息
+    /// </summary>
+    /// <param name="info">传入数据</param>
     public void InitPlaneInfo(PlaneInfo info)
     {
         //首先清除上一次的模型
