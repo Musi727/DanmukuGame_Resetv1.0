@@ -50,10 +50,11 @@ public class SelectPanel : BasePanel
         //首先清除上一次的模型
         ClearPrefab();
         //首先加载模型
-        ResMgr.Instance.LoadResourcesAsync<GameObject>("Airplane/" + info.modelRes, (obj) =>
+        PoolMgr.Instance.GetGameObject("Airplane/" + info.modelRes, (plane) =>
         {
-            GameObject plane = Instantiate(obj);
-            plane.transform.SetParent(_planePos,false);
+            plane.transform.position = _planePos.position;
+            plane.transform.rotation = _planePos.rotation;
+            plane.transform.localScale = info.scale * Vector3.one;
             //记录当前预制体
             _nowPrefab = plane;
         });
@@ -66,7 +67,7 @@ public class SelectPanel : BasePanel
     {
         if (_nowPrefab != null)
         {
-            Destroy(_nowPrefab.gameObject);
+            PoolMgr.Instance.PushGameObject(_nowPrefab.gameObject.name, _nowPrefab.gameObject);
             _nowPrefab = null;
         }
     }

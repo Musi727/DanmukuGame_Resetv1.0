@@ -36,7 +36,7 @@ public class PoolData
         obj = poolList[poolList.Count-1];
         poolList.RemoveAt(poolList.Count-1);
         obj.SetActive(true);
-        obj.transform.SetParent(null);
+        obj.transform.SetParent(null,true);
         return obj;
     }
 }

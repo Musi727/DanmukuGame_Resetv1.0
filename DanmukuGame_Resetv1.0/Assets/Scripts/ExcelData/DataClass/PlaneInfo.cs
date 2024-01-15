@@ -5,4 +5,5 @@ public class PlaneInfo
     public int hp;
     public int speed;
     public int volume;
+    public float scale;
 }
