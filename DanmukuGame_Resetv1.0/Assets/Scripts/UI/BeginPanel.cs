@@ -14,7 +14,10 @@ public class BeginPanel : BasePanel
         switch(name)
         {
             case "btnStart":
-                //跳转到游戏界面
+                //跳转到游戏面板
+                //关闭当前面板
+                UIMgr.Instance.HidePanel<BeginPanel>("BeginPanel");
+                UIMgr.Instance.ShowPanel<SelectPanel>("SelectPanel",E_UI_Layer.mid,(panel)=>{});
                 break;
             case "btnRank":
                 UIMgr.Instance.ShowPanel<RankPanel>("RankPanel",E_UI_Layer.mid,(panel)=>{});
