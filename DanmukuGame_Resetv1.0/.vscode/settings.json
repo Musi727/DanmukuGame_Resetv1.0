@@ -52,8 +52,6 @@
         "Temp/": true
     },
     "dotnet.preferCSharpExtension": true,
-<<<<<<< HEAD
-    "dotnet.defaultSolution": "DanmukuGame_Resetv1.0.sln",
     "dotnetAcquisitionExtension.existingDotnetPath": [
         {
             "extensionId": "ms-dotnettools.csharp",
@@ -64,7 +62,5 @@
             "path": "C:\\Program Files\\dotnet\\dotnet.exe"
         }
     ],
-=======
     "dotnet.defaultSolution": "DanmukuGame_Resetv1.0.sln"
->>>>>>> UI
 }
