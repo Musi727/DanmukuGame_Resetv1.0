@@ -9,6 +9,7 @@ public class SelectPanel : BasePanel
     private int _index; //当前选择飞机的索引
     private List<PlaneInfo> _infoList;
     private GameObject _nowPrefab;
+    private RaycastHit _hitInfo;
     public override void Init()
     {
         _index = 0;
@@ -45,6 +46,18 @@ public class SelectPanel : BasePanel
         //打开该界面时，初始化飞机模型信息
         InitPlaneInfo(DataMgr.Instance.PlaneInfoList[_index]);
     }
+    protected override void Update()
+    {
+        base.Update();
+        //通过射线检测判断是否点击到了飞机
+        if (Input.GetMouseButton(0))
+        {
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out _hitInfo, 1000, 1 << LayerMask.NameToLayer("Default")))
+            {
+                _hitInfo.transform.Rotate(Vector3.up, -Input.GetAxisRaw("Mouse X") * Time.deltaTime * 1000);
+            }
+        }
+    }
     public void InitPlaneInfo(PlaneInfo info)
     {
         //首先清除上一次的模型
@@ -55,6 +68,7 @@ public class SelectPanel : BasePanel
             plane.transform.position = _planePos.position;
             plane.transform.rotation = _planePos.rotation;
             plane.transform.localScale = info.scale * Vector3.one;
+            plane.AddComponent<PlaneObj>().IsSelectPanel = true;
             //记录当前预制体
             _nowPrefab = plane;
         });
@@ -68,6 +82,7 @@ public class SelectPanel : BasePanel
         if (_nowPrefab != null)
         {
             PoolMgr.Instance.PushGameObject(_nowPrefab.gameObject.name, _nowPrefab.gameObject);
+            _nowPrefab.GetComponent<PlaneObj>().IsSelectPanel = false;
             _nowPrefab = null;
         }
     }
