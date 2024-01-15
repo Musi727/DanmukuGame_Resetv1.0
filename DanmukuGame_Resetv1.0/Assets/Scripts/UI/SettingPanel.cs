@@ -54,6 +54,7 @@ public class SettingPanel : BasePanel
     public override void ShowMe()
     {
         base.ShowMe();
+        //打开该界面时，从数据中读取设置数据
         InitSettingInfo();
         
     }

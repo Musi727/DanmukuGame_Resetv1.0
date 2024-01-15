@@ -6,10 +6,13 @@ public class DataMgr : BaseManager<DataMgr>
 {
     private MusicData _musicData = new MusicData();
     public MusicData MusicData => _musicData;
+    private List<PlaneInfo> _planeInfoList = new List<PlaneInfo>();
+    public List<PlaneInfo> PlaneInfoList => _planeInfoList;
 
     public void Init()
     {
         _musicData = JsonMgr.Instance.LoadData<MusicData>("MusicData");
+        _planeInfoList = JsonMgr.Instance.LoadData<List<PlaneInfo>>("PlaneInfo");
     } 
     public void SaveSettingData()
     {
