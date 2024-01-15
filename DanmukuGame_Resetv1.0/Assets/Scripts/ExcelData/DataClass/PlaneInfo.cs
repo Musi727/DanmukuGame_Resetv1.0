@@ -6,4 +6,5 @@ public class PlaneInfo
     public int speed;
     public int volume;
     public float scale;
+    public float moveSpeed;
 }

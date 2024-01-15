@@ -88,6 +88,7 @@ public class SelectPanel : BasePanel
             plane.transform.rotation = _planePos.rotation;
             plane.transform.localScale = info.scale * Vector3.one;
             plane.AddComponent<PlaneObj>().IsSelectPanel = true;
+            plane.GetComponent<PlaneObj>().IsCanMove = false;
             //记录当前预制体
             _nowPrefab = plane;
         });
