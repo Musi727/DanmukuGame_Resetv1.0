@@ -39,6 +39,7 @@ public class Game : MonoBehaviour
                     tower.AddComponent<Tower>().InitTowerInfo(DataMgr.Instance.TowerInfoList[index], _TowerPos[index]);
             });
         }
+        Consts.Center = _camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 300));
     }
 
     // Update is called once per frame

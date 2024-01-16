@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,43 +13,51 @@ public enum E_BulletType
     /// 曲线子弹
     /// </summary>
     Curve,
-    /// <summary>
-    /// 追踪子弹
-    /// </summary>
-    Trace,
 }
 
 public class BulletObj : MonoBehaviour
 {
     public float moveSpeed;
-    private E_BulletType type;
-    public Vector3 targetPos;
+    public E_BulletType Type;
+    public Vector3 LeftDownBullet;
+    public Vector3 RightUpBullet;
+    private float _time;
     // Start is called before the first frame update
     void Start()
     {
-        
+        LeftDownBullet = Consts.LeftDown + new Vector3(-100, -100);
+        RightUpBullet = Consts.RightUp + new Vector3(100, 100);
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch (type) 
+        _time += Time.deltaTime;
+        switch (Type) 
         {
             case E_BulletType.Straight:
                 this.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
                 break;
             case E_BulletType.Curve:
-                this.transform.Translate(new Vector3(1,1,0) * moveSpeed * Time.deltaTime);
-                break;
-            case E_BulletType.Trace:
-                this.transform.position = Vector3.Lerp(targetPos, this.transform.position, Time.deltaTime / Vector3.Distance(this.transform.position,targetPos));
+                this.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+                this.transform.Translate(Vector3.up * Mathf.Cos(_time) , Space.World);
                 break;
         }
+        //如果子弹出界则将子弹放入对象池
+        if (transform.position.x < LeftDownBullet.x || transform.position.x > RightUpBullet.x)
+            this.Destroy();
+        if (transform.position.y < LeftDownBullet.y || transform.position.y > RightUpBullet.y)
+            this.Destroy();
     }
-    public void InitBullet(BulletInfo info,Vector3 pos)
+    public void InitBullet(BulletInfo info)
     {
         this.moveSpeed = info.moveSpeed;
-        this.type = (E_BulletType)info.id;
-        targetPos = pos;
+        this.Type = (E_BulletType)info.id;
     }
+    public void Destroy()
+    {
+        PoolMgr.Instance.PushGameObject("Bullet/Bullet", this.gameObject);
+        _time = 0;
+    }
+
 }

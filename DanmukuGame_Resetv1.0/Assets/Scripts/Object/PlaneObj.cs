@@ -25,8 +25,6 @@ public class PlaneObj : MonoBehaviour
     private Quaternion _rotation; //记录战机出生时的四元数
     private float _horizontalValue;
     private float _verticalValue;
-    private Vector3 _leftDown;
-    private Vector3 _rightUp;
     private Camera _camera;
     private Vector3 _lastPosition; //记录上一帧玩家的位置
     // Start is called before the first frame update
@@ -41,8 +39,8 @@ public class PlaneObj : MonoBehaviour
         Vector3 p1 = new Vector3(0, 0, 300);
         Vector3 p2 = new Vector3(1, 1, 300);
         //使用Camera的方法将视口坐标（Viewport Coordinates）转换为世界坐标（World Coordinates
-        _leftDown = Camera.main.ViewportToWorldPoint(p1);
-        _rightUp = Camera.main.ViewportToWorldPoint(p2);
+        Consts.LeftDown = Camera.main.ViewportToWorldPoint(p1);
+        Consts.RightUp = Camera.main.ViewportToWorldPoint(p2);
     }
 
     // Update is called once per frame
@@ -65,18 +63,26 @@ public class PlaneObj : MonoBehaviour
             this.transform.rotation = Quaternion.AngleAxis(30 * -_horizontalValue, Vector3.up) * _rotation;
             this.transform.rotation *= Quaternion.AngleAxis(15 * _verticalValue, Vector3.right);
         }
-        if(transform.position.x < _leftDown.x || transform.position.x> _rightUp.x)
+        if(transform.position.x < Consts.LeftDown.x || transform.position.x> Consts.RightUp.x)
         {
             Vector3 pos = transform.position;
             pos.x = _lastPosition.x;
             transform.position = pos;
         }
-        if (transform.position.y < _leftDown.y || transform.position.y > _rightUp.y)
+        if (transform.position.y < Consts.LeftDown.y || transform.position.y > Consts.RightUp.y)
         {
             Vector3 pos = transform.position;
             pos.y = _lastPosition.y;
             transform.position = pos;
         }
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Bullet"))
+        {
+            //调用Bullet脚本
+            other.GetComponent<BulletObj>().Destroy();
+        }
     }
 }
