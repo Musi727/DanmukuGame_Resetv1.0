@@ -34,6 +34,7 @@ public class GamePanel : BasePanel
         string minutes = time % 3600 / 60 != 0 ? (time % 3600 / 60).ToString() +"m" : "";
         string seconds = time % 60 != 0 ? (time % 60).ToString()+"s" : "";
         GetController<Text>("txtTimeNum").text = str + hours + minutes + seconds;
+        Consts.Time = _time; 
     }
     public void UpdateHp()
     {

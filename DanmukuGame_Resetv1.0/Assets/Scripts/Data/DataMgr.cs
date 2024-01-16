@@ -11,8 +11,12 @@ public class DataMgr : BaseManager<DataMgr>
     public List<PlaneInfo> PlaneInfoList => _planeInfoList;
     private List<TowerInfo> _towerInfoList = new List<TowerInfo>();
     public List<TowerInfo> TowerInfoList => _towerInfoList;
+
     private List<BulletInfo> _bulletInfoList = new List<BulletInfo>();
     public List<BulletInfo> BulletInfosList => _bulletInfoList;
+
+    private List<RankData> _rankInfoList = new List<RankData>();
+    public List<RankData> RankInfoList => _rankInfoList;
 
     public void Init()
     {
@@ -24,5 +28,13 @@ public class DataMgr : BaseManager<DataMgr>
     public void SaveSettingData()
     {
         JsonMgr.Instance.SaveData(_musicData, ("MusicData"));
+    }
+    public void SaveRankData()
+    {
+        JsonMgr.Instance.SaveData(_rankInfoList, ("RankData"));
+    }
+    public void AddRankData(RankData data)
+    {
+        _rankInfoList.Add(data);
     }
 }

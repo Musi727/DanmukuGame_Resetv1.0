@@ -7,4 +7,5 @@ public static class Consts
     public static Vector3 LeftDown;
     public static Vector3 RightUp;
     public static Vector3 Center;
+    public static float Time;
 }

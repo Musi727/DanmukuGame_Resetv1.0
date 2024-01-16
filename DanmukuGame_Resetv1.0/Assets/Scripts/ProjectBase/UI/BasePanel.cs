@@ -31,6 +31,7 @@ public abstract class BasePanel : MonoBehaviour
         FindChildrenControl<Toggle>();
         FindChildrenControl<Slider>();
         FindChildrenControl<InputField>();
+        FindChildrenControl<ScrollRect>();
     }
 
 

@@ -117,6 +117,11 @@ public class Tower : MonoBehaviour
             yield return new WaitForSeconds(_fireRoundOffset);
         }
     }
+    private void OnDestroy()
+    {
+        StopCoroutine(Fire());
+        StopCoroutine(ScatteringFire());
+    }
     public void InitTowerInfo(TowerInfo info,Vector3 pos)
     {
         this.transform.position = pos;

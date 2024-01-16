@@ -249,6 +249,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7444924158717489258}
+  - component: {fileID: 2982081170330767248}
   m_Layer: 5
   m_Name: RankInfo
   m_TagString: Untagged
@@ -280,6 +281,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &2982081170330767248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7444924158717489259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30e9130efc3686749a92de0a63c57685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  txtRanking: {fileID: 7444924157492015469}
+  txtName: {fileID: 7444924158033689082}
+  txtTime: {fileID: 7444924157888492659}
 --- !u!1 &7444924159270311948
 GameObject:
   m_ObjectHideFlags: 0
