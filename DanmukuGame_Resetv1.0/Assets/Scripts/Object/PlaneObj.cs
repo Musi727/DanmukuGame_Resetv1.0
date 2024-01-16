@@ -6,6 +6,7 @@ using static UnityEditor.PlayerSettings;
 public class PlaneObj : MonoBehaviour
 {
     public static PlaneObj Player;
+    private int _hp;
     private bool _isSelectPanel;
     public bool IsSelectPanel
     {
@@ -15,6 +16,7 @@ public class PlaneObj : MonoBehaviour
             _isSelectPanel = value;
         }
     }
+    public int Hp => _hp;
     private bool _isCanMove = true;
     public bool IsCanMove
     {
@@ -33,6 +35,7 @@ public class PlaneObj : MonoBehaviour
         Player = this;
         _rotation = this.transform.rotation;
         _roleInfo = DataMgr.Instance.PlaneInfoList[DataMgr.Instance.SelectRoleID];
+        _hp = _roleInfo.hp;
         _camera = GameObject.Find("Camera").GetComponent<Camera>();
         //获得屏幕坐标转世界坐标的4个边界
         //视口坐标左下为0,0 ，右上为1,1
@@ -83,6 +86,17 @@ public class PlaneObj : MonoBehaviour
         {
             //调用Bullet脚本
             other.GetComponent<BulletObj>().Destroy();
+            ChangeHp(1);
+            UIMgr.Instance.GetPanel<GamePanel>().UpdateHp();
+        }
+    }
+    public void ChangeHp(int damage) 
+    {
+        _hp -= damage;
+        if (_hp < 0)
+        {
+            _hp = 0;
+            UIMgr.Instance.ShowPanel<GameOverPanel>("GameOverPanel", E_UI_Layer.mid, (panel) => { });
         }
     }
 }

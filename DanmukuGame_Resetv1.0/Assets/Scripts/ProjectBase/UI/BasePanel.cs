@@ -69,7 +69,14 @@ public abstract class BasePanel : MonoBehaviour
     {
 
     }
+    protected virtual void OnValueChange(string name, string value)
+    {
 
+    }
+    protected virtual void OnEndEdit(string name, string value)
+    {
+
+    }
     protected void FindChildrenControl<T>() where T: UIBehaviour
     {
         T[] controls = this.GetComponentsInChildren<T>();
@@ -113,6 +120,8 @@ public abstract class BasePanel : MonoBehaviour
                 case Image:
                     break;
                 case InputField:
+                    (controls[i] as InputField).onValueChanged.AddListener((value) => { });
+                    (controls[i] as InputField).onEndEdit.AddListener((value) => { });
                     break;
             }
         }
